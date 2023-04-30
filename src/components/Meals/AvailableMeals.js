@@ -4,24 +4,26 @@ import MealItem from './MealItem/MealItem';
 import classes from './AvailableMeals.module.css';
 
 const AvailableMeals = () => {
-  const [meals, setMeals] =useState([]);
+  const [meals, setMeals] = useState([]);
   useEffect(() => {
     const fetchMeals = async () => {
-      const response = await fetch('https://test12-a8f65-default-rtdb.europe-west1.firebasedatabase.app/meals.json');
+      const response = await fetch(
+        'https://test12-a8f65-default-rtdb.europe-west1.firebasedatabase.app/meals.json',
+      );
       const responseData = await response.json();
       const loadedMeals = [];
-      for (const key in responseData ){
+      for (const key in responseData) {
         loadedMeals.push({
           id: key,
           name: responseData[key].name,
           description: responseData[key].description,
           price: responseData[key].price,
-        })
+        });
       }
       console.log(loadedMeals);
       setMeals(loadedMeals);
     };
-    
+
     fetchMeals();
   }, []);
 
