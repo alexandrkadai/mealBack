@@ -15,6 +15,11 @@
   color: aliceblue;
   text-transform: uppercase;
 }
+.errorText{
+  text-align: center;
+  color: red;
+  text-transform: uppercase;
+}
 
 @keyframes meals-appear {
   from {

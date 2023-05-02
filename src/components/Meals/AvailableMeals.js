@@ -6,12 +6,16 @@ import classes from './AvailableMeals.module.css';
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [someError, setSomeError] = useState();
 
   useEffect(() => {
     const fetchMeals = async () => {
       const response = await fetch(
         'https://test12-a8f65-default-rtdb.europe-west1.firebasedatabase.app/meals.json',
       );
+      if (!response.ok) {
+        throw new Error('Something went wrong');
+      }
       const responseData = await response.json();
       const loadedMeals = [];
       for (const key in responseData) {
@@ -27,7 +31,12 @@ const AvailableMeals = () => {
       setIsLoading(false);
     };
 
-    fetchMeals();
+  
+      fetchMeals().catch(error => {
+        setIsLoading(false);
+        setSomeError(error.message);
+      });
+  
   }, []);
 
   if (isLoading) {
@@ -36,6 +45,15 @@ const AvailableMeals = () => {
         <p>Is Loading</p>
       </section>
     );
+  }
+
+  if(someError){
+    return(
+      <section className={classes.errorText}>
+      <p>{someError}</p>
+    </section>
+
+    )
   }
 
   const mealsList = meals.map((meal) => (
