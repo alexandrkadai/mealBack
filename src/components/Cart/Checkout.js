@@ -1,4 +1,4 @@
-import classes from './Checkout.modal.css';
+import classes from './Checkout.module.css';
 
 const CheckOut = (props) => {
   const confirmHandler = (event) => {
