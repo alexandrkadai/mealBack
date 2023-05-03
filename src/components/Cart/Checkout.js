@@ -1,6 +1,9 @@
 import classes from './Checkout.modal.css';
 
 const CheckOut = (props) => {
+  const confirmHandler = (event) => {
+    event.preventDefault();
+  };
   return (
     <form>
       <div className={classes.control}>
@@ -12,15 +15,17 @@ const CheckOut = (props) => {
         <input type="text" id="street" />
       </div>
       <div className={classes.control}>
-      <label htmlFor="housenum">Your House Number</label>
-      <input type="text" id="housenum" />
-    </div>
-    <div className={classes.control}>
-    <label htmlFor="tel">Your Phone Number</label>
-    <input type="text" id="tel" />
-  </div>
-  <button type="button" onClick={props.onCancel}>Cancel</button>
-  <button>Submit</button>
+        <label htmlFor="housenum">Your House Number</label>
+        <input type="text" id="housenum" />
+      </div>
+      <div className={classes.control}>
+        <label htmlFor="tel">Your Phone Number</label>
+        <input type="text" id="tel" />
+      </div>
+      <button type="button" onClick={props.onCancel}>
+        Cancel
+      </button>
+      <button>Submit</button>
     </form>
   );
 };

@@ -20,9 +20,9 @@ const Cart = (props) => {
     cartCtx.addItem(item);
   };
 
-  const orderHandler = () =>{
+  const orderHandler = () => {
     setIsEmpty(false);
-  }
+  };
 
   const cartItems = (
     <ul className={classes['cart-items']}>
@@ -46,12 +46,16 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {!isEmpty ? <CheckOut onCancel={props.onClose}/> : <p>Nothing</p>}
+      {!isEmpty ? <CheckOut onCancel={props.onClose} /> : <p>Nothing</p>}
       <div className={classes.actions}>
         <button className={classes['button--alt']} onClick={props.onClose}>
           Close
         </button>
-        {hasItems && <button className={classes.button} onClick={orderHandler}>Order</button>}
+        {hasItems && (
+          <button className={classes.button} onClick={orderHandler}>
+            Order
+          </button>
+        )}
       </div>
     </Modal>
   );
