@@ -39,6 +39,19 @@ const Cart = (props) => {
     </ul>
   );
 
+  const buttonModal =
+  <div className={classes.actions}>
+  <button className={classes['button--alt']} onClick={props.onClose}>
+    Close
+  </button>
+  {hasItems && (
+    <button className={classes.button} onClick={orderHandler}>
+      Order
+    </button>
+  )}
+</div>
+;
+
   return (
     <Modal onClose={props.onClose}>
       {cartItems}
@@ -47,16 +60,7 @@ const Cart = (props) => {
         <span>{totalAmount}</span>
       </div>
       {!isEmpty ? <CheckOut onCancel={props.onClose} /> : <p>Nothing</p>}
-      <div className={classes.actions}>
-        <button className={classes['button--alt']} onClick={props.onClose}>
-          Close
-        </button>
-        {hasItems && (
-          <button className={classes.button} onClick={orderHandler}>
-            Order
-          </button>
-        )}
-      </div>
+      {isEmpty ?buttonModal : ''}
     </Modal>
   );
 };
