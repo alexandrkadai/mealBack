@@ -6,7 +6,7 @@ const isNotPostal = (value) => value.trim().lenght !== 5;
 
 const Checkout = (props) => {
   const [formInputVal, setFormInputVal] = useState({
-    name: false,
+    name: true,
     street: true,
     postal: true,
     city: true,
@@ -40,17 +40,18 @@ const Checkout = (props) => {
       enteredNameIsValid && enteredStreetIsValid && enteredCityIsValid && enteredPostalIsValid;
 
     if (!formIsValid) {
-      console.log('Not Succsesssdcsf');
+      console.log('Not Succsesfull');
       return;
     }
     if (formIsValid) {
-      console.log('succses');
+      console.log('Succses');
+      return;
     }
   };
 
   return (
     <form className={classes.form} onSubmit={confirmHandler}>
-      <div className={`${classes.control} ${formInputVal.name ? '' : classes.invalidß}`}>
+      <div className={`${classes.control} ${formInputVal.name ? '' : classes.invalid}`}>
         <label htmlFor="name">Your Name</label>
         <input type="text" id="name" ref={nameInputRef} />
         {!formInputVal.name && <p>Please Enter Valid Name</p>}
@@ -81,3 +82,5 @@ const Checkout = (props) => {
 };
 
 export default Checkout;
+
+//Fix needed at this point we have some issues
