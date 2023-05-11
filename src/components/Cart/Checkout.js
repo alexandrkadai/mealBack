@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import classes from './Checkout.module.css';
 
-const isEmpty = (value) => value.trim().length === '';
-const isNotPostal = (value) => value.trim().lenght !== 5;
+const isEmpty = (value) => value.trim() === '';
+const isPostal = (value) => value.trim().length === 5;
 
 const Checkout = (props) => {
   const [formInputVal, setFormInputVal] = useState({
@@ -27,7 +27,7 @@ const Checkout = (props) => {
     const enteredNameIsValid = !isEmpty(enteredName);
     const enteredStreetIsValid = !isEmpty(enteredStreet);
     const enteredCityIsValid = !isEmpty(enteredCity);
-    const enteredPostalIsValid = isNotPostal(enteredPostal);
+    const enteredPostalIsValid = isPostal(enteredPostal);
 
     setFormInputVal({
       name: enteredNameIsValid,
@@ -56,17 +56,17 @@ const Checkout = (props) => {
         <input type="text" id="name" ref={nameInputRef} />
         {!formInputVal.name && <p>Please Enter Valid Name</p>}
       </div>
-      <div className={classes.control}>
+      <div className={`${classes.control} ${formInputVal.street ? '' : classes.invalid}`}>
         <label htmlFor="street">Street</label>
         <input type="text" id="street" ref={streetInputRef} />
         {!formInputVal.street && <p>Please Enter Valid street</p>}
       </div>
-      <div className={classes.control}>
+      <div className={`${classes.control} ${formInputVal.postal ? '' : classes.invalid}`}>
         <label htmlFor="postal">Postal Code</label>
         <input type="number" id="postal" ref={postalInputRef} />
         {!formInputVal.postal && <p>Please Enter Valid postal</p>}
       </div>
-      <div className={classes.control}>
+      <div className={`${classes.control} ${formInputVal.city ? '' : classes.invalid}`}>
         <label htmlFor="city">City</label>
         <input type="text" id="city" ref={cityInputRef} />
         {!formInputVal.city && <p>Please Enter Valid city</p>}
