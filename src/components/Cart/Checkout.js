@@ -30,10 +30,10 @@ const Checkout = (props) => {
     const enteredPostalIsValid = isPostal(enteredPostal);
 
     setFormInputVal({
-      name: enteredNameIsValid,
-      street: enteredStreetIsValid,
-      city: enteredCityIsValid,
-      postal: enteredPostalIsValid,
+      name: enteredName,
+      street: enteredStreet,
+      city: enteredPostal,
+      postal: enteredCity,
     });
 
     const formIsValid =
@@ -45,8 +45,15 @@ const Checkout = (props) => {
     }
     if (formIsValid) {
       console.log('Succses');
+      props.onSubmitForm({
+        name: enteredNameIsValid,
+        street: enteredStreetIsValid,
+        city: enteredCityIsValid,
+        postal: enteredPostalIsValid,
+      });
       return;
     }
+   
   };
 
   return (

@@ -24,6 +24,13 @@ const Cart = (props) => {
     setIsEmpty(false);
   };
 
+  const submitOrderHandler = (userData) => {
+    fetch('https://test12-a8f65-default-rtdb.europe-west1.firebasedatabase.app/orders.json', {
+      method: 'POST',
+      body: JSON.stringify({ user: userData, orderedItems:cartCtx.items }),
+    });
+  };
+
   const cartItems = (
     <ul className={classes['cart-items']}>
       {cartCtx.items.map((item) => (
@@ -58,7 +65,11 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {!isEmpty ? <CheckOut onCancel={props.onClose} /> : <p>Nothing</p>}
+      {!isEmpty ? (
+        <CheckOut onCancel={props.onClose} onSubmitForm={submitOrderHandler} />
+      ) : (
+        <p>Nothing</p>
+      )}
       {isEmpty ? buttonModal : ''}
     </Modal>
   );
