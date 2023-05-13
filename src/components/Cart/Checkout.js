@@ -46,10 +46,10 @@ const Checkout = (props) => {
     if (formIsValid) {
       console.log('Succses');
       props.onSubmitForm({
-        name: enteredNameIsValid,
-        street: enteredStreetIsValid,
-        city: enteredCityIsValid,
-        postal: enteredPostalIsValid,
+        name: enteredName,
+        street: enteredStreet,
+        city: enteredCity,
+        postal: enteredPostal,
       });
       return;
     }

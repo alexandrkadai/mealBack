@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, Fragment } from 'react';
 
 import Modal from '../UI/Modal';
 import CartItem from './CartItem';
@@ -9,6 +9,9 @@ import CheckOut from './Checkout';
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
   const [isEmpty, setIsEmpty] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitDone, setSubmitDone] = useState(false);
+
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
 
@@ -24,11 +27,18 @@ const Cart = (props) => {
     setIsEmpty(false);
   };
 
-  const submitOrderHandler = (userData) => {
-    fetch('https://test12-a8f65-default-rtdb.europe-west1.firebasedatabase.app/orders.json', {
+  const submitOrderHandler = async (userData) => {
+    //User Reminder that everithing goes ok
+    setIsSubmitting(true);
+    await fetch('https://test12-a8f65-default-rtdb.europe-west1.firebasedatabase.app/orders.json', {
       method: 'POST',
-      body: JSON.stringify({ user: userData, orderedItems:cartCtx.items }),
+      body: JSON.stringify({ user: userData, orderedItems: cartCtx.items }),
     });
+    //Make a check of response if error catch if OK the setIsSubmitting to true
+    setIsSubmitting(false);
+    //Submission done show user message window
+    setSubmitDone(true);
+    cartCtx.clearCart();
   };
 
   const cartItems = (
@@ -58,8 +68,9 @@ const Cart = (props) => {
       )}
     </div>
   );
-  return (
-    <Modal onClose={props.onClose}>
+
+  const cartModalContent = (
+    <Fragment>
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
@@ -71,6 +82,25 @@ const Cart = (props) => {
         <p>Nothing</p>
       )}
       {isEmpty ? buttonModal : ''}
+    </Fragment>
+  );
+
+  const isSubmittingModalContent = <p>Sending Order To Delivery Service. Thank You :)</p>;
+
+  const submitDoneModal = <p>Order Have Send, wait for a call.</p>;
+
+    if(submitDone){
+      setTimeout(() =>{
+        setSubmitDone(false);
+
+      }, "2000");
+    }
+  
+  return (
+    <Modal onClose={props.onClose}>
+      {!isSubmitting && !submitDone && cartModalContent}
+      {isSubmitting && isSubmittingModalContent}
+      {!isSubmitting &&  submitDone && submitDoneModal}
     </Modal>
   );
 };
